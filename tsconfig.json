@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "types": ["bun-types"],
+    "allowSyntheticDefaultImports": true
+  },
+
+  "lib": ["ESNext"],
+  "module": "esnext",
+  "target": "es2017",
+
+  "moduleResolution": "bundler",
+  "moduleDetection": "force",
+  "allowImportingTsExtensions": true,
+  "noEmit": true,
+
+  "jsx": "react-jsx",
+  "allowJs": false,
+
+  "composite": true,
+  "strict": true,
+  "downlevelIteration": true,
+  "skipLibCheck": true,
+  "allowSyntheticDefaultImports": true,
+  "forceConsistentCasingInFileNames": true,
+
+  "types": [
+    "bun-types"
+  ]
+}
+
