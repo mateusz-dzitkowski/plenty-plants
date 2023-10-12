@@ -1,7 +1,6 @@
 import bodyParser from "body-parser";
 import express from "express";
 import dotenv from "dotenv";
-import * as xd from "./database"
 
 import { connectDB } from "./database";
 import * as routes from "./routes";
