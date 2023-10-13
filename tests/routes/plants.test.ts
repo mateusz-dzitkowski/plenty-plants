@@ -5,17 +5,9 @@ import { plantService } from "../../src/database/mongodb/services";
 import { connect, clear, disconnect } from "../setup";
 
 describe("Test the plants route", async () => {
-    beforeAll(async () => {
-        await connect();
-    });
-
-    beforeEach(async () => {
-       await clear();
-    });
-
-    afterAll(async () => {
-        await disconnect();
-    });
+    beforeAll(connect);
+    beforeEach(clear);
+    afterAll(disconnect);
 
     test("Should return an empty list",  async () => {
         const res = await request(app).get("/api/plants");
