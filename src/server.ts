@@ -1,6 +1,5 @@
 import bodyParser from "body-parser";
 import express from "express";
-import dotenv from "dotenv";
 
 import { connectDB } from "./database/mongodb/connect";
 import * as routes from "./routes";
@@ -8,7 +7,6 @@ import * as routes from "./routes";
 const app = express();
 const port = 3000;
 
-dotenv.config();
 connectDB().then(() => {
     // Express config
     app.use(bodyParser.json());
