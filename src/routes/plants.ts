@@ -7,7 +7,7 @@ export const router = Router();
 
 router.get("/", async (req, res) => {
     const plants = await plantService.getAll();
-    res.send(plants);
+    return res.send(plants);
 })
 
 router.get("/:id", param("id").matches(/^[0-9A-Fa-f]{24}$/), async (req, res) => {
@@ -22,7 +22,7 @@ router.get("/:id", param("id").matches(/^[0-9A-Fa-f]{24}$/), async (req, res) =>
     res.status(400).send({ errors: result.array() })
 })
 
-router.post("/", async (req: Request<{}, IPlant>, res) => {
+router.post("/", async (req: Request<object, IPlant>, res) => {
     try {
         const plant = await plantService.create(req.body)
         res.json(plant);

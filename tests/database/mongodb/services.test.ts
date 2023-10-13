@@ -11,7 +11,7 @@ describe("Test the plant service", async () => {
     test("Should create a Plant and save it to the database",  async () => {
         const plant = { name: "test-plant", description: "test-description" }
         await plantService.create(plant);
-        const plants = await Plant.find() as Plant[];
+        const plants = await Plant.find() ;
         expect(plants.length).toEqual(1);
         expect(plants[0]).toMatchObject(plant);
     });
