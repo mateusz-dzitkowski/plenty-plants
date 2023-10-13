@@ -1,17 +1,27 @@
-import { Router, Request} from "express";
-import { Plant } from "../models";
+import { Router, Request } from "express";
+import { IPlant } from "../domain/schemas";
+import { plantService } from "../database/mongodb/services";
+import { param, validationResult } from "express-validator";
 
 export const router = Router();
 
 router.get("/", async (req, res) => {
-    const plants = await Plant.find() as Plant[];
+    const plants = await plantService.getAll();
     res.send(plants);
 })
 
-router.post("/", async (req: Request<{}, Plant>, res) => {
+router.get("/:id", param("id").isLength({ min: 24, max: 24 }), async (req, res) => {
+    const result = validationResult(req);
+    if (result.isEmpty()) {
+        const plant = await plantService.getOne(req.params.id);
+        return res.send(plant);
+    }
+    res.status(400).send({ errors: result.array() })
+})
+
+router.post("/", async (req: Request<{}, IPlant>, res) => {
     try {
-        const plant = new Plant(req.body);
-        await plant.save();
+        const plant = await plantService.create(req.body)
         res.json(plant);
     } catch (err) {
         res.status(500).send(err.message)

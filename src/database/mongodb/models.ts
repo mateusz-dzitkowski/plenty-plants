@@ -1,9 +1,5 @@
 import { Schema, model, InferSchemaType } from "mongoose";
-
-interface IPlant {
-    name: string;
-    description?: string;
-}
+import { IPlant } from "../../domain/schemas";
 
 const plantSchema = new Schema<IPlant>(
     {

@@ -2,7 +2,7 @@ import bodyParser from "body-parser";
 import express from "express";
 import dotenv from "dotenv";
 
-import { connectDB } from "./database";
+import { connectDB } from "./database/mongodb/connect";
 import * as routes from "./routes";
 
 const app = express();
