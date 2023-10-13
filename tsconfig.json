@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2022",
     "types": ["bun-types"],
     "allowSyntheticDefaultImports": true
   },
 
   "lib": ["ESNext"],
-  "module": "esnext",
-  "target": "es2017",
 
   "moduleResolution": "bundler",
   "moduleDetection": "force",

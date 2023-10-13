@@ -1,24 +1,9 @@
-import bodyParser from "body-parser";
-import express from "express";
-
+import { app } from "./app";
 import { connectDB } from "./database/mongodb/connect";
-import * as routes from "./routes";
 
-const app = express();
 const port = 3000;
+await connectDB(process.env.DB_HOST, process.env.DB_NAME);
 
-connectDB().then(() => {
-    // Express config
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.get("/", (req, res) => {
-        res.send("App running")
-    })
-
-    // all other routes
-    app.use("/api/plants", routes.plantRouter);
-
-    app.listen(port, () => {
-        console.log(`Listening on port ${port}`);
-    })
-});
+app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+})

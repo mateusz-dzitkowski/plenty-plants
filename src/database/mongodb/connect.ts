@@ -1,9 +1,8 @@
 import { connect } from "mongoose";
 
-export const connectDB = async () => {
+export const connectDB = async (host: string, database: string) => {
     try {
-        await connect(process.env.MONGODB_CONN_STRING);
-        console.log("MongoDB connected...");
+        return connect(`mongodb://${host}:27017/${database}`);
     } catch (error) {
         console.log(error.message);
         process.exit(1);
