@@ -10,10 +10,13 @@ router.get("/", async (req, res) => {
     res.send(plants);
 })
 
-router.get("/:id", param("id").isLength({ min: 24, max: 24 }), async (req, res) => {
+router.get("/:id", param("id").matches(/^[0-9A-Fa-f]{24}$/), async (req, res) => {
     const result = validationResult(req);
     if (result.isEmpty()) {
         const plant = await plantService.getOne(req.params.id);
+        if (plant === null) {
+            res.status(404);
+        }
         return res.send(plant);
     }
     res.status(400).send({ errors: result.array() })
@@ -24,6 +27,6 @@ router.post("/", async (req: Request<{}, IPlant>, res) => {
         const plant = await plantService.create(req.body)
         res.json(plant);
     } catch (err) {
-        res.status(500).send(err.message)
+        res.status(500).send(err);
     }
 })

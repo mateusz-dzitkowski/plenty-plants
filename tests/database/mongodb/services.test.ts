@@ -3,7 +3,7 @@ import { plantService } from "../../../src/database/mongodb/services";
 import { Plant } from "../../../src/database/mongodb/models";
 import { connect, clear, disconnect } from "../../setup";
 
-describe("Test the plants route", async () => {
+describe("Test the plant service", async () => {
     beforeAll(connect);
     beforeEach(clear);
     afterAll(disconnect);

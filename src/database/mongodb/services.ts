@@ -21,4 +21,4 @@ const mongoDBPlantService: PlantService = {
     }
 }
 
-export const plantService = mongoDBPlantService
+export const plantService = mongoDBPlantService;
