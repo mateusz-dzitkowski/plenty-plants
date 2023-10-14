@@ -18,7 +18,8 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "start": "bun --hot run src/server.ts"
+    "start": "bun --hot run src/server.ts",
+    "prepare": "husky install"
   },
   "type": "module",
   "dependencies": {
