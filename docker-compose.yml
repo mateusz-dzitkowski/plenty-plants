@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: backend
+    environment:
+      - DB_HOST=mongodb
+      - DB_NAME=plenty_plants
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/src
+    networks:
+      - backend
+
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend
+
+volumes:
+  mongo_data:
+
+networks:
+  backend:
+    driver: bridge
