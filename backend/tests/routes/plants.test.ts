@@ -5,6 +5,9 @@ import { Plant } from "../../src/database/mongodb/models";
 import { connect, clear, disconnect } from "../setup";
 
 describe("Test the plants route", async () => {
+    const workingPlantID = "aaaaaaaaaaaaaaaaaaaaaaaa";
+    const notWorkingPlantIDs = ["aaa", "zzzzzzzzzzzzzzzzzzzzzzzz"];
+
     beforeAll(connect);
     beforeEach(clear);
     afterAll(disconnect);
@@ -31,15 +34,12 @@ describe("Test the plants route", async () => {
     });
 
     test("Should get an undefined when there is no plant with such ID", async () => {
-       const res = await request(app).get("/api/plants/aaaaaaaaaaaaaaaaaaaaaaaa");
+       const res = await request(app).get(`/api/plants/${workingPlantID}`);
        expect(res.statusCode).toEqual(404);
        expect(res.body).toEqual(undefined);
     });
 
-    test.each([
-        "aaa",
-        "zzzzzzzzzzzzzzzzzzzzzzzz"
-        ])("Should get an error if the ID is not 24 characters long", async (id: string) => {
+    test.each(notWorkingPlantIDs)("Should get an error if the ID is not 24 characters long", async (id: string) => {
         const res = await request(app).get(`/api/plants/${id}`);
         expect(res.statusCode).toEqual(400);
         expect(res.body.errors.length).toEqual(1);
@@ -56,5 +56,24 @@ describe("Test the plants route", async () => {
     test("Should error when not all required fields are provided", async () => {
         const res = await request(app).post("/api/plants");
         expect(res.statusCode).toEqual(500);
+    });
+
+    test("Should update the plant", async () => {
+        const original_plant = await new Plant({ name: "test-plant", description: "original" }).save();
+        const res = await request(app).patch(`/api/plants/${original_plant.id}`).send({ description: "updated" });
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.description).toEqual("updated");
+    });
+
+    test("Should return 404 when no plant", async () => {
+        const res = await request(app).patch(`/api/plants/${workingPlantID}`).send({ description: "updated" });
+        expect(res.statusCode).toEqual(404);
+    });
+
+    test.each(notWorkingPlantIDs)("Should get an error if the ID is not 24 characters long", async (id: string) => {
+        const res = await request(app).patch(`/api/plants/${id}`);
+        expect(res.statusCode).toEqual(400);
+        expect(res.body.errors.length).toEqual(1);
+        expect(res.body.errors[0].msg).toEqual("Invalid value");
     });
 });

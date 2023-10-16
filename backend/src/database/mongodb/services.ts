@@ -13,11 +13,15 @@ const mongoDBPlantService: PlantService = {
     },
 
     async getOne(id) {
-        try {
-            return Plant.findById(id);
-        } catch (err) {
+        return Plant.findById(id);
+    },
+
+    async update(id, data) {
+        const updated = Plant.findByIdAndUpdate(id, data, { new: true});
+        if (!updated) {
             return null
         }
+        return updated
     }
 }
 

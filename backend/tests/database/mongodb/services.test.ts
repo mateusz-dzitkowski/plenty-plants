@@ -40,4 +40,17 @@ describe("Test the plant service", async () => {
         const plant = await plantService.getOne("non-existent");
         expect(plant).toBeNull();
     });
+
+    test("Should update the plant", async () => {
+        const original_plant = await new Plant({ name: "test-plant", description: "original" }).save();
+        const new_plant = await plantService.update(original_plant.id, { description: "updated" });
+        expect(new_plant).toBeInstanceOf(Plant);
+        expect(new_plant.name).toEqual(original_plant.name);
+        expect(new_plant.description).toEqual("updated");
+    });
+
+    test("Should return null if there is no such plant", async () => {
+       const new_plant = await plantService.update("non-existent", {});
+       expect(new_plant).toBeNull();
+    });
 });
